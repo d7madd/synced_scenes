@@ -46,8 +46,8 @@ new Vue({
       if (!data || !data.source === "synched_scenes_devtool") return;
       if (data.open === true) {
         this.showMenu = true;
-        this.state.favs = data.data.favs;
-        this.state.currentScene = data.data.current;
+        this.state.favs = data.favs;
+        this.state.currentScene = data.current;
       } else {
         this.showMenu = false;
       }

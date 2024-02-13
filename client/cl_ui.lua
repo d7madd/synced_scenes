@@ -4,8 +4,8 @@ end
 
 local function KvpGet(key)
     local str = GetResourceKvpString(key)
-    if str == "" then
-        return nil
+    if not str or str == "" then
+        return {}
     end
     return json.decode(str)
 end
@@ -16,10 +16,9 @@ RegisterCommand("synchronisedScenes", function(_, args)
     SendNUIMessage({
         source = "synched_scenes_devtool",
         open = true,
-        data = {
-            favs = favs,
-            current = SynchedScenes.currentScene
-        }
+        favs = favs,
+        current = SynchedScenes.currentScene
+
     })
     SetNuiFocus(true, true)
 end)
