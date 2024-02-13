@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="style.css" rel="stylesheet" />
+    <link type="text/css" rel="stylesheet" href="css/all.min.css" />
+    <link type="text/css" rel="stylesheet" href="css/balloon.min.css" />
+    <title>synched scenes devtool</title>
+  </head>
+  <body>
+    <div id="app" class="w-full h-screen p-0 m-0 overflow-hidden font-body">
+      <div v-if="showMenu" class="absolute top-0 left-0 h-screen w-1/5 bg-slate-800/90 overflow-auto p-2">
+        <div class="flex flex-col text-gray-200 gap-1 w-full h-full mt-2">
+          <h1 class="text-2xl shadow-md font-semibold text-center">Synched Scenes</h1>
+          <p class="text-gray-200 text-sm mt-2">Search:</p>
+          <input
+            type="text"
+            v-model="state.search"
+            class="bg-black/30 rounded-sm mb-3 pl-2 py-1 appearance-none focus:outline-none"
+            @input="onInput"
+          />
+
+          <div class="flex flex-col text-sm bg-green-700/50 rounded-md w-full p-2">
+            <div class="flex justify-between items-center">
+              <p><i class="text-yellow-500/90">results</i>: {{ formatScenes.length }}</p>
+              <button
+                @click="stopScene"
+                class="bg-red-800/90 px-3 py-1 rounded-sm text-sm hover:bg-red-700/90 text-gray-200 shadow-lg"
+              >
+                stop
+              </button>
+            </div>
+            <div class="border border-gray-400/90 my-1"></div>
+            <p><i>last played:</i> {{ state.selected }}</p>
+            <div class="flex justify-between">
+              <p><i>duration</i>: {{ state.duration.toFixed(2) }} ms</p>
+              <p><i>actors</i>: 2</p>
+              <p><i>obejcts</i>: 2</p>
+            </div>
+          </div>
+          <button
+            @click="toggleFavourites"
+            class="p-1 bg-yellow-700 text-sm text-gray-200 rounded-sm mt-1"
+            :class="{ 'bg-gray-700': !state.showFavs }"
+          >
+            Toggle Favourites
+          </button>
+          <div class="flex flex-col h-full overflow-y-auto mt-2" ref="scenes" @scroll="handleScroll">
+            <div class="text-center" v-if="state.scenes.length === 0">Loading...</div>
+            <div
+              v-for="scene in formatScenes"
+              :key="scene.id"
+              class="flex flex-col bg-slate-600/90 rounded-sm px-2 py-1 text-sm mb-1 relative"
+              :class="{ 'bg-green-700/80': scene.name === state.selected }"
+            >
+              <p>{{ scene.name }}</p>
+              <p class="text-yellow-500/90"><i>actors</i>: {{ scene.actors.length }}</p>
+              <p class="text-yellow-500/90"><i>obejcts</i>: {{ scene.objects.length }}</p>
+              <div
+                class="absolute outline-none text-white text-xl cursor-pointer z-10 right-2 top-1/2 -translate-y-1/2 flex space-x-5 items-center"
+              >
+                <div @click="startScene(scene)" class="solar--play-bold"></div>
+                <div
+                  @click="setFav(scene)"
+                  class="bi--star-fill"
+                  :class="{ 'text-yellow-400': state.favs.includes(scene.name) }"
+                ></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
