@@ -133,11 +133,16 @@ function StopSynchronisedScene()
     end
 end
 
-AddEventHandler("onResourceStart", function(resource)
-    if resource == GetCurrentResourceName() then
-        SynchedScenes.scenes = GetScenesList()
-        print("Sync Scenes: Loaded " .. #SynchedScenes.scenes .. " scenes")
-    end
+-- AddEventHandler("onResourceStart", function(resource)
+--     if resource == GetCurrentResourceName() then
+--         SynchedScenes.scenes = GetScenesList()
+--         print("Sync Scenes: Loaded " .. #SynchedScenes.scenes .. " scenes")
+--     end
+-- end)
+
+CreateThread(function()
+    SynchedScenes.scenes = GetScenesList()
+    print("Sync Scenes: Loaded " .. #SynchedScenes.scenes .. " scenes")
 end)
 
 AddEventHandler("onResourceStop", function(resource)

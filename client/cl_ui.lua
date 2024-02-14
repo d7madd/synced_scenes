@@ -24,7 +24,7 @@ RegisterCommand("synchronisedScenes", function(_, args)
 end)
 
 RegisterNuiCallback("sync_scenes:getSynchedScenes", function(_, cb)
-    local scenes = GetScenesList()
+    local scenes = SynchedScenes.scenes
     cb({ data = scenes })
 end)
 
