@@ -1,6 +1,6 @@
 # GTA 5 Synchronized Scenes Tester
 
-A free standalone resource for FiveM to test GTA5 synchronized scenes.
+A standalone resource for FiveM to test GTA5 synchronized scenes.
 
 All scenes imported from Gta5Mods, link:
 
